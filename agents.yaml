@@ -45,6 +45,13 @@ agents:
     role: specialist
     tools: [Read, Write]
 
+  reading-guide-writer:
+    name: "Reading Guide Writer"
+    description: "阅读标注：精读/略读/跳过、核心骨架、注水拆解、时间盒读法"
+    color: teal
+    role: specialist
+    tools: [Read, Write]
+
   quality-reviewer:
     name: "Quality Gate Reviewer"
     description: "门禁评分：引用数、禁用词、启发可落地性、总分 ≥9"

@@ -11,7 +11,7 @@
 | 向量检索 | Chroma + DashScope text-embedding-v3 |
 | 混合检索 | 向量 + BM25 关键词 + 章节锚点 |
 | 联网书评 | WebSearch + 豆瓣/Goodreads 抓取 |
-| 结构化总结 | Skill harness（10 个必含章节） |
+| 结构化总结 | Skill harness（summary 10 章 + 阅读标注） |
 | 门禁评分 | 生成/评判分离，≥9 分才输出 |
 
 ## 安装
@@ -49,6 +49,7 @@ npm run pi
 /skill:book-summary
 /skill:book-insights
 /skill:book-review-search
+/skill:book-reading-guide
 /skill:reading-report
 ```
 
@@ -61,7 +62,7 @@ npm run read -- "书名" --file ~/Downloads/book.pdf
 ## 工作流
 
 ```
-book-ingest → [并行] book-summary / book-insights / book-review-search
+book-ingest → [并行] book-summary / book-insights / book-review-search / book-reading-guide
            → reading-report（合并）
            → quality-reviewer（门禁 ≥9）
            → 输出 workspace/<book-slug>/report.md

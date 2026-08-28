@@ -2,7 +2,7 @@ rubric:
   structure:
     weight: 0.2
     criteria:
-    - 10 个必含章节全部存在
+    - 11 个必含章节全部存在（含阅读标注与拆解）
     - 标题层级清晰
     - 段落长度适中（≤4 行/段）
   citations:
@@ -29,5 +29,6 @@ rubric:
     - 外部评价已聚合
     - 争议与局限已提及
     - 延伸阅读合理
+    - 阅读标注覆盖每一章，精读章 1–4 个，含可略读/跳过
 pass_threshold: 9
 scoring_scale: 0-10

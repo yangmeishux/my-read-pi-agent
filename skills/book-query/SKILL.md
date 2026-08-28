@@ -40,7 +40,7 @@ python scripts/query.py <book_slug> "<question>" [--top_k 10]
 
 ## 使用场景
 
-- `book-summary` 和 `book-insights` 调用此 Skill 获取原文引用
+- `book-summary`、`book-insights`、`book-reading-guide` 调用此 Skill 获取原文与目录
 - 用户直接提问时，先检索再生成回答
 - 验证引用准确性时，用此 Skill 回溯原文
 

@@ -43,12 +43,29 @@ gates:
       type: actionable_check
     - name: no_vague_inspirations
       type: banned_patterns_check
+  reading-guide-quality:
+    description: 阅读标注质量检查
+    checks:
+    - name: file_exists
+      type: file_exists
+      path_template: workspace/{slug}/reading-guide.md
+    - name: required_sections
+      type: sections_check
+      required_sections: 5
+    - name: close_read_count
+      type: range
+      field: close_read_chapter_count
+      min: 1
+      max: 4
+    - name: has_skip_or_skim
+      type: required_true
+      field: has_non_close_read_tag
   report-quality:
     description: 最终报告质量检查
     checks:
     - name: all_chapters_present
       type: chapters_check
-      required_chapters: 10
+      required_chapters: 11
     - name: citation_count
       type: min_value
       field: citation_count
