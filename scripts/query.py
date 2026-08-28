@@ -53,15 +53,27 @@ def vector_search(query: str, book_slug: str, top_k: int = 10) -> list[dict]:
     return hits
 
 
+def tokenize_for_bm25(text: str) -> list[str]:
+    """中文按字切、英文按词切。纯空格分词会把整段中文当成一个 token。"""
+    cleaned = re.sub(r'[^\w\u4e00-\u9fff]', ' ', text).lower()
+    tokens = []
+    for part in cleaned.split():
+        if re.search(r'[\u4e00-\u9fff]', part):
+            tokens.extend(list(part))
+        else:
+            tokens.append(part)
+    return tokens
+
+
 def bm25_search(query: str, chunks: list[dict], top_k: int = 10) -> list[dict]:
     """BM25 关键词检索"""
     from rank_bm25 import BM25Okapi
 
     corpus = [c['text'] for c in chunks]
-    tokenized = [list(re.sub(r'[^\w\u4e00-\u9fff]', ' ', doc).lower().split()) for doc in corpus]
+    tokenized = [tokenize_for_bm25(doc) for doc in corpus]
     bm25 = BM25Okapi(tokenized)
 
-    tokens = list(re.sub(r'[^\w\u4e00-\u9fff]', ' ', query).lower().split())
+    tokens = tokenize_for_bm25(query)
     scores = bm25.get_scores(tokens)
 
     # top_k

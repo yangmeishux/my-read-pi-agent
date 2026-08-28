@@ -1,0 +1,12 @@
+slug: 如何快速了解一个行业
+title: 如何快速了解一个行业
+author: 肖璟
+publisher: 人民邮电出版社
+year: 2025
+isbn: "9787115674937"
+source_file: /Users/nathan/Documents/code-file/my-read-pi-agent/library/raw/如何快速了解一个行业.pdf
+parsed_file: /Users/nathan/Documents/code-file/my-read-pi-agent/library/parsed/如何快速了解一个行业.md
+format: pdf
+chunk_count: 213
+status: ingested
+ingest_notes: PDF 走 pymupdf4llm 回退；DashScope sk-sp- 无法做 embedding，索引用 Chroma 本地 all-MiniLM-L6-v2
