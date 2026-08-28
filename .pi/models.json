@@ -1,7 +1,7 @@
 {
   "providers": {
     "deepseek": {
-      "baseUrl": "$DEEPSEEK_BASE_URL",
+      "baseUrl": "https://api.deepseek.com/v1",
       "api": "openai-completions",
       "apiKey": "$DEEPSEEK_API_KEY",
       "compat": {
