@@ -25,6 +25,16 @@ def slugify(text: str) -> str:
     return text.lower().strip('-')[:60]
 
 
+def chroma_collection_name(slug: str) -> str:
+    """Chroma 集合名只允许 ASCII，中文 slug 转成稳定的 book-<hash>。"""
+    ascii_name = re.sub(r'[^a-zA-Z0-9_-]', '-', slug).strip('-')
+    ascii_name = re.sub(r'-{2,}', '-', ascii_name)[:60]
+    if ascii_name and re.match(r'^[a-zA-Z0-9].*[a-zA-Z0-9]$', ascii_name) and len(ascii_name) >= 3:
+        return ascii_name.lower()
+    import hashlib
+    return "book-" + hashlib.md5(slug.encode("utf-8")).hexdigest()[:16]
+
+
 def detect_format(path: Path) -> str:
     """根据扩展名检测文档格式"""
     ext = path.suffix.lower()
@@ -155,29 +165,36 @@ def chunk_by_headings(md_text: str, max_chunk_chars: int = 2000) -> list[dict]:
     return chunks
 
 
+def make_embed_fn():
+    """
+    DashScope text-embedding-v3 优先。
+    Coding Plan Key（sk-sp-）不能调 embedding，回退到 Chroma 本地模型。
+    """
+    from chromadb.utils import embedding_functions
+
+    api_key = os.getenv("DASHSCOPE_API_KEY", "").strip()
+    if api_key and not api_key.startswith("sk-sp-"):
+        return embedding_functions.OpenAIEmbeddingFunction(
+            api_key=api_key,
+            api_base="https://dashscope.aliyuncs.com/compatible-mode/v1",
+            model_name="text-embedding-v3",
+        )
+    print("[WARN] 未配置可用的 DashScope embedding Key（sk-sp- 为 Coding Plan，不能做向量化），改用本地 embedding")
+    return embedding_functions.DefaultEmbeddingFunction()
+
+
 def build_vector_index(chunks: list[dict], book_slug: str, index_dir: Path):
     """
     构建 Chroma 向量索引。
-    使用 DashScope text-embedding-v3 作为 embedding 模型。
     """
     import chromadb
-    from chromadb.utils import embedding_functions
-    import dashscope
 
-    api_key = os.getenv("DASHSCOPE_API_KEY")
-    if not api_key:
-        raise RuntimeError("未配置 DASHSCOPE_API_KEY，请在 .env 中设置")
-
-    # DashScope embedding 兼容 OpenAI 接口
-    embed_fn = embedding_functions.OpenAIEmbeddingFunction(
-        api_key=api_key,
-        api_base="https://dashscope.aliyuncs.com/compatible-mode/v1",
-        model_name="text-embedding-v3",
-    )
+    embed_fn = make_embed_fn()
+    collection_name = chroma_collection_name(book_slug)
 
     client = chromadb.PersistentClient(path=str(index_dir))
     collection = client.get_or_create_collection(
-        name=book_slug,
+        name=collection_name,
         embedding_function=embed_fn,
         metadata={"hnsw:space": "cosine"},
     )

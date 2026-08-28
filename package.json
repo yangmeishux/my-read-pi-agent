@@ -4,12 +4,15 @@
   "description": "读书学习智能体：PDF/EPUB 解析 + RAG 检索 + 结构化总结",
   "type": "module",
   "scripts": {
-    "start": "npx pi agent",
-    "pi": "npx pi agent",
+    "start": "npm run pi",
+    "pi": "node --env-file=.env ./node_modules/@earendil-works/pi-coding-agent/dist/bundle/cli.js",
     "ingest": "python scripts/ingest.py",
     "query": "python scripts/query.py",
     "new": "python scripts/new_book.py",
     "list": "python scripts/list_library.py"
+  },
+  "dependencies": {
+    "@earendil-works/pi-coding-agent": "^0.84.3"
   },
   "engines": {
     "node": ">=22.19.0"

@@ -20,8 +20,9 @@
 
 ```bash
 npm install
-npx pi install -l . --approve
 ```
+
+会安装真正的运行时 `@earendil-works/pi-coding-agent`。不要用 `npx pi`，npm 上的 `pi` 是无关的圆周率工具包。
 
 ### Python 依赖
 

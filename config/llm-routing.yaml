@@ -1,4 +1,8 @@
 providers:
+  deepseek:
+    type: openai_compatible
+    base_url: ${DEEPSEEK_BASE_URL}
+    api_key: ${DEEPSEEK_API_KEY}
   dashscope:
     type: openai_compatible
     base_url: ${DASHSCOPE_BASE_URL}
@@ -9,20 +13,20 @@ models:
     model: text-embedding-v3
     use_case: 向量索引 + 检索
   summary:
-    provider: dashscope
-    model: qwen-plus
+    provider: deepseek
+    model: deepseek-chat
     use_case: 全书总结
     temperature: 0.3
     max_tokens: 4096
   insights:
-    provider: dashscope
-    model: qwen-plus
+    provider: deepseek
+    model: deepseek-chat
     use_case: 洞见挖掘
     temperature: 0.5
     max_tokens: 4096
   quality_review:
-    provider: dashscope
-    model: qwen-plus
+    provider: deepseek
+    model: deepseek-chat
     use_case: 门禁评分
     temperature: 0.1
     max_tokens: 2048

@@ -61,7 +61,8 @@ fi
 # 初始化 Pi Agent
 echo ""
 echo "6. 初始化 Pi Agent..."
-npx pi install -l . --approve
+echo "✓ 已通过 npm 安装 @earendil-works/pi-coding-agent"
+echo "  请勿使用 npx pi（会装到无关的圆周率工具包）"
 
 echo ""
 echo "=== 安装完成 ==="

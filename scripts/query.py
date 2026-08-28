@@ -28,18 +28,17 @@ def load_chunks(parsed_path: Path) -> list[dict]:
 def vector_search(query: str, book_slug: str, top_k: int = 10) -> list[dict]:
     """Chroma 向量检索"""
     import chromadb
-    from chromadb.utils import embedding_functions
 
-    api_key = os.getenv("DASHSCOPE_API_KEY")
-    embed_fn = embedding_functions.OpenAIEmbeddingFunction(
-        api_key=api_key,
-        api_base="https://dashscope.aliyuncs.com/compatible-mode/v1",
-        model_name="text-embedding-v3",
-    )
+    from scripts.ingest import chroma_collection_name, make_embed_fn
 
-    index_dir = ROOT / "library" / "index"
+    embed_fn = make_embed_fn()
+
+    index_dir = ROOT / "library" / "index" / book_slug
     client = chromadb.PersistentClient(path=str(index_dir))
-    collection = client.get_collection(name=book_slug, embedding_function=embed_fn)
+    collection = client.get_collection(
+        name=chroma_collection_name(book_slug),
+        embedding_function=embed_fn,
+    )
 
     results = collection.query(query_texts=[query], n_results=top_k)
     hits = []

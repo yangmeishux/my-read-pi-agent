@@ -1,0 +1,7 @@
+{
+  "defaultProvider": "deepseek",
+  "defaultModel": "deepseek-chat",
+  "skills": ["../skills"],
+  "lastChangelogVersion": "0.84.3",
+  "theme": "light"
+}

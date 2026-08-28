@@ -53,6 +53,13 @@ yarn-error.log*
 .env
 .env.local
 
+# Pi 运行时（会话/鉴权，配置文件保留入库）
+.pi/sessions/
+.pi/npm/
+.pi/git/
+.pi/auth.json
+.pi/trust.json
+
 # OS
 .DS_Store
 Thumbs.db
