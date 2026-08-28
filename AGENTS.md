@@ -8,7 +8,7 @@
 
 ## 核心使命
 
-从一本书的原始文本出发，产出 **有引用、有结构、有洞见、有启发、有读法标注** 的知识报告。
+从一本书的原始文本出发，产出 **有引用、有结构、有洞见、有启发、有读法标注、有逐章详述** 的知识报告。
 
 ---
 
@@ -25,6 +25,7 @@
 | `insights.md` | 深刻洞见与启发 |
 | `external-reviews.md` | 外部书评聚合 |
 | `reading-guide.md` | 阅读标注：精读/略读/跳过/骨架/注水 |
+| `digest.md` | 逐章详述 + 全书总述（完整覆盖） |
 | `report.md` | 最终合并报告 |
 | `refs.json` | 所有引用溯源索引 |
 
@@ -38,9 +39,10 @@
    - `/skill:book-insights` → 深刻洞见 + 可落地启发
    - `/skill:book-review-search` → 联网搜外部书评
    - `/skill:book-reading-guide` → 阅读标注与拆解
-3. `/skill:reading-report` → 合并四份输出为终稿
+   - `/skill:book-digest` → 逐章详述 + 全书总述
+3. `/skill:reading-report` → 合并五份输出为终稿
 4. 门禁检查（quality-reviewer）：引用 ≥5、无禁用词、评分 ≥9、读法表覆盖每一章
-5. 未过 → 回退 summary、insights 或 reading-guide 修改（最多 3 次）
+5. 未过 → 回退 summary、insights、reading-guide 或 digest 修改（最多 3 次）
 
 ---
 
@@ -63,6 +65,7 @@
 
 | Skill | 用途 |
 |-------|------|
+| `book-digest` | 逐章详述 + 全书总述 |
 | `book-reading-guide` | 阅读标注：精读 / 略读 / 跳过 / 骨架 / 注水 |
 | `book-compare` | （可选）多本书横向对比 |
 
@@ -81,7 +84,7 @@
 
 ### 失败处理
 
-- 门禁未过 → 回退到 summary / insights / reading-guide 修改
+- 门禁未过 → 回退到 summary / insights / reading-guide / digest 修改
 - 最多重试 3 次，超限走 best_effort
 - 结构病（章节缺失/逻辑断裂）→ 回退到 summary 重写
 
@@ -97,7 +100,7 @@
 ## 与用户协作
 
 - 解析完成后 **明确询问** 是否继续总结
-- 输出报告用中文，11 个必含章节（含阅读标注）
+- 输出报告用中文，12 个必含章节（含阅读标注与逐章详述）
 - 用户说"合格"时，必须最近一次门禁评分 ≥9
 
 ## 风格参考

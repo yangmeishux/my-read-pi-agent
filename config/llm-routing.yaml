@@ -24,6 +24,12 @@ models:
     use_case: 洞见挖掘
     temperature: 0.5
     max_tokens: 4096
+  digest:
+    provider: deepseek
+    model: deepseek-chat
+    use_case: 逐章详述与全书总述
+    temperature: 0.2
+    max_tokens: 8192
   reading_guide:
     provider: deepseek
     model: deepseek-chat

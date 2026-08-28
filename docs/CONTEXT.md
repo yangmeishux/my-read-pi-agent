@@ -18,7 +18,7 @@
 多路检索结果融合算法。公式：`score = Σ 1/(k + rank)`，k 通常取 60。
 
 ### Harness
-思维脚手架。限制 LLM 输出结构的框架，避免泛泛而谈。本项目用 summary 的 10 个必含章节，外加独立的阅读标注（reading-guide.md）作为 harness。
+思维脚手架。限制 LLM 输出结构的框架，避免泛泛而谈。本项目用 summary 的 10 个必含章节、独立的阅读标注（reading-guide.md）、以及逐章详述（digest.md）作为 harness。
 
 ### 门禁 (Quality Gate)
 硬检查点。未通过门禁的输出不允许进入下一阶段。本项目门禁：引用 ≥5、无禁用词、评分 ≥9。
@@ -35,10 +35,13 @@
 书籍元信息文件。包含 slug、source_file、parsed_file、chunk_count、status。
 
 ### workspace
-每本书的独立工作目录。包含 book.yaml、summary.md、insights.md、external-reviews.md、reading-guide.md、report.md。
+每本书的独立工作目录。包含 book.yaml、summary.md、insights.md、external-reviews.md、reading-guide.md、digest.md、report.md。
 
 ### reading-guide.md
 阅读标注。按章打标签：精读 / 带着问题读 / 略读 / 当附录查 / 可跳过。精读章限制 1–4 个。
+
+### digest.md
+逐章详述 + 全书总述。覆盖目录每一章，回答「这本书具体讲了什么」。与 summary.md（骨架）分工。
 
 ### library
 书库目录。包含 raw（原始文件）、parsed（解析后的 MD）、index（Chroma 索引）、metadata。
@@ -72,7 +75,7 @@
 
 | 维度 | 权重 | 标准 |
 |------|------|------|
-| 结构完整性 | 20% | 报告 11 个必含章节全部存在（含阅读标注） |
+| 结构完整性 | 20% | 报告 12 个必含章节全部存在（含阅读标注与逐章详述） |
 | 引用质量 | 25% | ≥5 条引用，每条带章节来源 |
 | 深度 | 20% | 深刻洞见有反常识点，启发可落地 |
 | 语言 | 15% | 无禁用词，无 AI 套话 |

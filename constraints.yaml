@@ -17,6 +17,15 @@ must_not:
   - "不可否认"
   - "众所周知"
 
+# 逐章详述（digest.md）
+digest:
+  required_sections:
+    - "逐章详述"
+    - "全书总述"
+  min_chapter_chars: 400
+  min_overall_chars: 400
+  cover_all_toc_chapters: true
+
 # 阅读标注（reading-guide.md）
 reading_guide:
   required_sections:
@@ -61,3 +70,4 @@ quality_gate:
   banned_phrases_count: 0
   insight_actionable: true
   reading_guide: true
+  digest: true

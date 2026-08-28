@@ -60,12 +60,24 @@ gates:
     - name: has_skip_or_skim
       type: required_true
       field: has_non_close_read_tag
+  digest-quality:
+    description: 逐章详述完整性检查
+    checks:
+    - name: file_exists
+      type: file_exists
+      path_template: workspace/{slug}/digest.md
+    - name: has_overall
+      type: sections_check
+      required_sections: 1
+    - name: cover_all_chapters
+      type: required_true
+      field: digest_covers_toc
   report-quality:
     description: 最终报告质量检查
     checks:
     - name: all_chapters_present
       type: chapters_check
-      required_chapters: 11
+      required_chapters: 12
     - name: citation_count
       type: min_value
       field: citation_count

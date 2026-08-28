@@ -52,6 +52,16 @@ agents:
     role: specialist
     tools: [Read, Write]
 
+  digest-writer:
+    name: "Book Digest Writer"
+    description: "逐章详述 + 全书总述，完整覆盖目录每一章"
+    color: yellow
+    role: specialist
+    tools: [Read, Write]
+    execution:
+      timeout: 600s
+      retry: 1
+
   quality-reviewer:
     name: "Quality Gate Reviewer"
     description: "门禁评分：引用数、禁用词、启发可落地性、总分 ≥9"

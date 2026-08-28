@@ -2,7 +2,7 @@
 # 执行：python -m engine.runner --workflow book-reading --book <slug>
 
 name: book-reading
-description: 完整读书流程：解析 → 并行总结/洞见/书评/读法标注 → 合并 → 门禁
+description: 完整读书流程：解析 → 并行分析 → 合并 → 门禁
 
 steps:
   - id: ingest
@@ -40,11 +40,18 @@ steps:
     description: 阅读标注（精读/略读/跳过/骨架/注水）
     parallel: true
 
+  - id: digest
+    skill: book-digest
+    agent: digest-writer
+    depends_on: [ingest]
+    description: 逐章详述 + 全书总述
+    parallel: true
+
   - id: report
     skill: reading-report
     agent: reader-coordinator
-    depends_on: [summary, insights, external-reviews, reading-guide]
-    description: 合并四份输出为终稿
+    depends_on: [summary, insights, external-reviews, reading-guide, digest]
+    description: 合并五份输出为终稿
 
   - id: quality-gate
     agent: quality-reviewer
@@ -62,7 +69,7 @@ steps:
     description: 回退到 summary/insights 修改（最多 3 次）
     retry:
       max_attempts: 3
-      rollback_to: [summary, insights, reading-guide]
+      rollback_to: [summary, insights, reading-guide, digest]
 
 retry_policy:
   max_retries: 3
@@ -70,5 +77,5 @@ retry_policy:
 
 parallel_groups:
   - id: parallel-analysis
-    steps: [summary, insights, external-reviews, reading-guide]
+    steps: [summary, insights, external-reviews, reading-guide, digest]
     wait_for: ingest

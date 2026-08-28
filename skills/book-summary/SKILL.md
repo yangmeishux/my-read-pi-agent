@@ -3,13 +3,13 @@ name: book-summary
 description: 全书结构化总结（10 个必含章节 + 原文引用）
 triggers:
   - book-summary
-  - 全书总结
-  - 这本书讲了什么
+  - 全书骨架
+  - 结构化总结
 ---
 
 # book-summary
 
-对一本书进行结构化总结，输出 `summary.md`，包含 10 个必含章节。
+对一本书进行结构化总结，输出 `summary.md`（骨架：一句话论点、章节地图等 10 节）。逐章详细内容由 `book-digest` 写入 `digest.md`。
 
 ## 前置条件
 
