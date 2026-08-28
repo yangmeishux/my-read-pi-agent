@@ -1,0 +1,44 @@
+platform: local
+language: zh-CN
+
+# 输出约束
+output:
+  report_format: markdown
+  citation_required: true
+  citation_format: "[章节名 / 页码]"
+
+# 禁用词（出现在输出中会触发门禁失败）
+must_not:
+  - "让我们"
+  - "综上所述"
+  - "值得注意的是"
+  - "随着技术的发展"
+  - "毫无疑问"
+  - "不可否认"
+  - "众所周知"
+
+# 必含章节（summary.md 必须包含）
+required_sections:
+  - "一句话论点"
+  - "三句话摘要"
+  - "章节地图"
+  - "关键概念"
+  - "论证链"
+  - "深刻洞见"
+  - "启发清单"
+  - "争议与局限"
+  - "延伸阅读"
+  - "原文引用"
+
+# 预算
+budget:
+  max_retries: 3
+  max_total_iterations: 10
+  on_exhaust: best_effort
+
+# 门禁阈值
+quality_gate:
+  min_score: 9
+  min_citations: 5
+  banned_phrases_count: 0
+  insight_actionable: true

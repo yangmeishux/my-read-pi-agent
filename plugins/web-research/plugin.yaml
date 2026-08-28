@@ -1,0 +1,8 @@
+name: web-research
+description: 联网搜索书评（豆瓣/Goodreads/维基百科）
+version: 1.0.0
+
+tools:
+  - name: search_book_reviews
+    description: 搜索书籍的外部评价与解读
+    tools: [WebSearch, WebFetch]

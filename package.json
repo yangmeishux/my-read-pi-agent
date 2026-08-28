@@ -1,0 +1,17 @@
+{
+  "name": "my-read-pi-agent",
+  "version": "1.0.0",
+  "description": "读书学习智能体：PDF/EPUB 解析 + RAG 检索 + 结构化总结",
+  "type": "module",
+  "scripts": {
+    "start": "npx pi agent",
+    "pi": "npx pi agent",
+    "ingest": "python scripts/ingest.py",
+    "query": "python scripts/query.py",
+    "new": "python scripts/new_book.py",
+    "list": "python scripts/list_library.py"
+  },
+  "engines": {
+    "node": ">=22.19.0"
+  }
+}

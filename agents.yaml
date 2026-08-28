@@ -1,0 +1,57 @@
+# Reading Agent - Agent 元数据
+# 消费方：Pi Agent runtime
+
+project:
+  name: my-read-pi-agent
+  version: "1.0.0"
+  description: "读书学习智能体：PDF/EPUB 解析 + RAG 检索 + 结构化总结"
+
+agents:
+  reader-coordinator:
+    name: "Reading Coordinator"
+    description: "读书流程编排者，驱动工作流、协调各 Skill"
+    color: blue
+    role: coordinator
+    tools: [Read, Write, Bash, WebSearch]
+
+  ingest-worker:
+    name: "Document Ingest Worker"
+    description: "文档解析 + 索引构建（PDF/EPUB → Markdown → Chroma 向量库）"
+    color: green
+    role: specialist
+    tools: [Bash]
+    execution:
+      timeout: 600s
+      retry: 1
+
+  query-worker:
+    name: "RAG Query Worker"
+    description: "混合检索：向量 + BM25 + 章节锚点，返回带引用的检索结果"
+    color: cyan
+    role: specialist
+    tools: [Read, Bash]
+
+  summary-writer:
+    name: "Book Summary Writer"
+    description: "全书结构化总结：10 个必含章节，带原文引用"
+    color: orange
+    role: specialist
+    tools: [Read, Write]
+
+  insight-writer:
+    name: "Insight & Inspiration Writer"
+    description: "深刻洞见挖掘 + 可落地启发清单"
+    color: purple
+    role: specialist
+    tools: [Read, Write]
+
+  quality-reviewer:
+    name: "Quality Gate Reviewer"
+    description: "门禁评分：引用数、禁用词、启发可落地性、总分 ≥9"
+    color: red
+    role: gate
+    tools: [Read, Write]
+    execution:
+      timeout: 120s
+      retry: 0
+      quality_gate: true

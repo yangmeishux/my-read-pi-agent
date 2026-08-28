@@ -1,0 +1,65 @@
+gates:
+  ingest-complete:
+    description: 文档解析完成
+    checks:
+    - name: parsed_file_exists
+      type: file_exists
+      path_template: library/parsed/{slug}.md
+    - name: index_exists
+      type: dir_exists
+      path_template: library/index/{slug}/
+    - name: chunk_count_min
+      type: min_value
+      field: chunk_count
+      value: 10
+  summary-quality:
+    description: 全书总结质量检查
+    checks:
+    - name: all_sections_present
+      type: sections_check
+      required_sections: 10
+    - name: citation_count
+      type: min_value
+      field: citation_count
+      value: 5
+    - name: citations_have_location
+      type: citation_format_check
+    - name: banned_phrases_count
+      type: max_value
+      field: banned_phrases_count
+      value: 0
+    - name: llm_score
+      type: min_value
+      field: llm_score
+      value: 9
+  insight-quality:
+    description: 洞见与启发质量检查
+    checks:
+    - name: insight_count
+      type: min_value
+      field: insight_count
+      value: 3
+    - name: insight_actionable
+      type: actionable_check
+    - name: no_vague_inspirations
+      type: banned_patterns_check
+  report-quality:
+    description: 最终报告质量检查
+    checks:
+    - name: all_chapters_present
+      type: chapters_check
+      required_chapters: 10
+    - name: citation_count
+      type: min_value
+      field: citation_count
+      value: 5
+    - name: no_banned_phrases
+      type: banned_phrases_check
+    - name: final_score
+      type: min_value
+      field: final_score
+      value: 9
+retry_policy:
+  max_retries: 3
+  on_fail: rollback_to_summary
+  on_exhaust: best_effort

@@ -1,0 +1,67 @@
+# 读书主工作流
+# 执行：python -m engine.runner --workflow book-reading --book <slug>
+
+name: book-reading
+description: 完整读书流程：解析 → 并行总结/洞见/书评 → 合并 → 门禁
+
+steps:
+  - id: ingest
+    skill: book-ingest
+    agent: ingest-worker
+    description: 文档解析 + 向量索引构建
+    gate:
+      - parsed_file_exists
+      - index_exists
+      - chunk_count_min: 10
+
+  - id: summary
+    skill: book-summary
+    agent: summary-writer
+    depends_on: [ingest]
+    description: 全书结构化总结（10 个必含章节）
+
+  - id: insights
+    skill: book-insights
+    agent: insight-writer
+    depends_on: [ingest]
+    description: 深刻洞见 + 可落地启发
+
+  - id: external-reviews
+    skill: book-review-search
+    agent: reader-coordinator
+    depends_on: [ingest]
+    description: 联网搜索外部书评
+    parallel: true  # 与 summary/insights 并行
+
+  - id: report
+    skill: reading-report
+    agent: reader-coordinator
+    depends_on: [summary, insights, external-reviews]
+    description: 合并三份输出为终稿
+
+  - id: quality-gate
+    agent: quality-reviewer
+    depends_on: [report]
+    description: 门禁评分（≥9 分通过）
+    gate:
+      - min_score: 9
+      - min_citations: 5
+      - banned_phrases_count: 0
+      - insight_actionable: true
+
+  - id: retry
+    depends_on: [quality-gate]
+    condition: gate_failed
+    description: 回退到 summary/insights 修改（最多 3 次）
+    retry:
+      max_attempts: 3
+      rollback_to: [summary, insights]
+
+retry_policy:
+  max_retries: 3
+  on_exhaust: best_effort
+
+parallel_groups:
+  - id: parallel-analysis
+    steps: [summary, insights, external-reviews]
+    wait_for: ingest

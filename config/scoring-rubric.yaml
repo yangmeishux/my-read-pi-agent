@@ -1,0 +1,33 @@
+rubric:
+  structure:
+    weight: 0.2
+    criteria:
+    - 10 个必含章节全部存在
+    - 标题层级清晰
+    - 段落长度适中（≤4 行/段）
+  citations:
+    weight: 0.25
+    criteria:
+    - 引用数 ≥ 5
+    - 每条引用带章节来源
+    - 引用准确（可回溯原文）
+  depth:
+    weight: 0.2
+    criteria:
+    - 深刻洞见有反常识点
+    - 启发可落地到具体行动
+    - 论证链完整
+  language:
+    weight: 0.15
+    criteria:
+    - 无禁用词
+    - 无 AI 套话
+    - 表达自然
+  completeness:
+    weight: 0.2
+    criteria:
+    - 外部评价已聚合
+    - 争议与局限已提及
+    - 延伸阅读合理
+pass_threshold: 9
+scoring_scale: 0-10

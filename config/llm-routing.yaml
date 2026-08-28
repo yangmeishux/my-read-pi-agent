@@ -1,0 +1,28 @@
+providers:
+  dashscope:
+    type: openai_compatible
+    base_url: ${DASHSCOPE_BASE_URL}
+    api_key: ${DASHSCOPE_API_KEY}
+models:
+  embedding:
+    provider: dashscope
+    model: text-embedding-v3
+    use_case: 向量索引 + 检索
+  summary:
+    provider: dashscope
+    model: qwen-plus
+    use_case: 全书总结
+    temperature: 0.3
+    max_tokens: 4096
+  insights:
+    provider: dashscope
+    model: qwen-plus
+    use_case: 洞见挖掘
+    temperature: 0.5
+    max_tokens: 4096
+  quality_review:
+    provider: dashscope
+    model: qwen-plus
+    use_case: 门禁评分
+    temperature: 0.1
+    max_tokens: 2048

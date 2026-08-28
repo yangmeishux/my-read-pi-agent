@@ -1,0 +1,21 @@
+name: doc-parser
+description: 文档解析插件（PDF/EPUB/TXT → Markdown）
+version: 1.0.0
+
+tools:
+  - name: parse_document
+    description: 将 PDF/EPUB/TXT 解析为 Markdown
+    command: python scripts/ingest.py
+    args:
+      - name: file_path
+        type: string
+        required: true
+        description: 文档文件路径
+      - name: slug
+        type: string
+        required: false
+        description: 自定义 slug
+
+  - name: list_library
+    description: 列出已索引书籍
+    command: python scripts/list_library.py
